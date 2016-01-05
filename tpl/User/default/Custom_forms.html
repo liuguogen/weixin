@@ -1,0 +1,139 @@
+<include file="Public:head"/> 
+<link rel="stylesheet" type="text/css" href="{weimicms::RES}/css/cymain.css" />
+<style>
+    .a_upload img{
+        background:url(./tpl/static/forum/css/img/icons.png) no-repeat center -150px;
+        width: 50px;
+        height: auto;
+        background-size:50px auto;
+        background-color:#888888;
+        border-radius:5px;
+        border:0px solid #d0d0d0;
+    }
+</style>
+<div class="content">
+<div class="cLineB">
+<h4>表单输入项管理 </h4>
+<div class="clr"></div>
+</div>
+<!--<a href="{weimicms::U('Custom/index',array('token'=>$token))}" class="right  btnGreen" style="margin-top:-27px">返回</a> -->
+<style>
+	#tags .btnGreen{background-image:none;background-color: #5BA607;color:#ffffff;height:30px;line-height: 30px;}
+	#tags .btnGreen:hover{background-color: #2F8BC9}
+</style>
+<div class="msgWrap form">
+<ul id="tags" style="width:100%">
+        <li <weimicmsif where="ACTION_NAME eq 'record'">class="selectTag"</weimicmsif>>
+                <a href="{weimicms::U('Custom/record')}">表单数据统计</a> 
+            </li>
+            <li <weimicmsif where="ACTION_NAME neq 'record'">class="selectTag"</weimicmsif>>
+                <a href="{weimicms::U('Custom/index')}">表单设置项</a> 
+            </li>
+            <li style="float:right;">
+            	<a href="{weimicms::U('Custom/index',array('token'=>$token))}" class="btnGreen">返回</a>
+            </li>
+            <div class="clr" style="height:1px;background:#eee;margin-bottom:20px;"></div>
+        </ul>
+</div>
+
+
+
+<div class="cLine">
+<div class="left"> 
+	<a href="{weimicms::U('Custom/forms_set',array('token'=>$token,'set_id'=>$set_id))}" title="输入设置" class="btnGrayS vm bigbtn"><img src="{weimicms::RES}/images/product/add.png" width="16" class="vm">输入设置</a>
+</div>
+<div class="clr"></div>
+</div>
+<div class="msgWrap">
+<form method="post" action="" id="info">
+<input name="delall" type="hidden" value="">
+<input name="wxid" type="hidden" value="">
+<table class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="100%">
+<thead>
+<tr>
+<th width="150">显示名称</th>
+<th width="50">输入类型</th>
+<th width="50">效果预览</th>
+<th width="40">排序</th>
+<th width="40">是否显示</th>
+<th width="100" class="norightborder">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr></tr>
+<volist name="list" id="item"> 
+<tr>
+<td>{weimicms:$item.field_name}</td>
+<td>{weimicms:$item.field_type}</td>
+<td>{weimicms:$item.input}</td>
+<td>{weimicms:$item.sort}</td>
+<td>
+	<if condition="$item.is_show eq '1'">
+		显示
+	<else />
+		不显示
+	</if>
+</td>
+<td class="norightborder">
+	<a href="{weimicms::U('Custom/forms_set',array('field_id'=>$item['field_id'],'token'=>$token,'set_id'=>$set_id))}">修改</a> |
+	<a href="javascript:drop_confirm('您确定要删除吗?', '{weimicms::U('Custom/forms_del',array('field_id'=>$item['field_id'],'token'=>$token))}');">删除</a>
+</td>
+</tr>
+</volist>
+</tbody>
+</table>
+</form>
+<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script src="/tpl/static/upyun.js"></script>
+<script>
+        function upl(){
+            var num=1;
+            var no1 = $("#portrait1_src").attr('src');
+            var no2 = $("#portrait2_src").attr('src');
+            var no3 = $("#portrait3_src").attr('src');
+            var no4 = $("#portrait4_src").attr('src');
+            var no5 = $("#portrait5_src").attr('src');
+            var no6 = $("#portrait6_src").attr('src');
+            var no7 = $("#portrait7_src").attr('src');
+
+            if(no1 != ''){
+                num++;
+            }
+
+            if(no2 != ''){
+                num++;
+            }
+
+            if(no3 != ''){
+                num++;
+            }
+
+            if(no4 != ''){
+                num++;
+            }
+
+            if(no5 != ''){
+                num++;
+            }
+
+            if(no6 != ''){
+                num++;
+            }
+
+            if(no7 != ''){
+                $('#after7').after('<dd style="display:none" id="imgdd8" type="image"><img src="" class="portrait_src" id="portrait8_src" /><input class="portrait" type="hidden" value="" id="portrait8" name="pics8" size="80" /></dd><dt><label> </label></dt>');
+                num++;
+            }
+            upyunWapPicUpload('portrait'+num,1024,768,'{weimicms:$Think.get.token}');
+        }
+</script>
+</div>
+<div class="cLine">
+<div class="pageNavigator right">
+<div class="pages">{weimicms:$page}</div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+<include file="Public:footer"/>
